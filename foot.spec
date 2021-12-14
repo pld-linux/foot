@@ -1,7 +1,7 @@
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
 Version:	1.10.3
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
@@ -27,20 +27,13 @@ Requires(post,postun):	gtk-update-icon-cache
 Requires:	fcft < 3.0.0
 Requires:	fcft >= 2.4.0
 Requires:	hicolor-icon-theme
-Requires:	terminfo-foot = %{version}-%{release}
+Requires:	terminfo >= 6.2.20210731
 Requires:	xorg-lib-libxkbcommon >= 1.0.0
+Obsoletes:	terminfo-foot < 1.10.3-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 A fast, lightweight and minimalistic Wayland terminal emulator.
-
-%package -n terminfo-foot
-Summary:	terminfo database entries for foot terminal emulator
-Requires:	terminfo
-BuildArch:	noarch
-
-%description -n terminfo-foot
-terminfo database entries for foot terminal emulator.
 
 %package -n bash-completion-foot
 Summary:	Bash completion for foot command line
@@ -79,7 +72,9 @@ ZSH completion for foot command line.
 %setup -q -n %{name}
 
 %build
-%meson build
+%meson build \
+	-Dterminfo=disabled
+
 %ninja_build -C build
 
 %install
@@ -113,11 +108,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/footclient.1*
 %{_mandir}/man5/foot.ini.5*
 %{_mandir}/man7/foot-ctlseqs.7*
-
-%files -n terminfo-foot
-%defattr(644,root,root,755)
-%{_datadir}/terminfo/f/foot
-%{_datadir}/terminfo/f/foot-direct
 
 %files -n bash-completion-foot
 %defattr(644,root,root,755)
