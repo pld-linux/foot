@@ -1,0 +1,24 @@
+--- foot/render.c.orig	2022-02-05 17:31:16.000000000 +0100
++++ foot/render.c	2022-02-10 10:19:20.686390012 +0100
+@@ -2750,12 +2750,21 @@
+         switch (term->conf->tweak.render_timer) {
+         case RENDER_TIMER_LOG:
+         case RENDER_TIMER_BOTH:
++#if defined(__x86_64__) && defined(__ILP32__)
++            LOG_INFO("frame rendered in %lds %lldns "
++                     "(%lds %lldns double buffering)",
++                     (long)render_time.tv_sec,
++                     render_time.tv_nsec,
++                     (long)double_buffering_time.tv_sec,
++                     double_buffering_time.tv_nsec);
++#else
+             LOG_INFO("frame rendered in %lds %ldns "
+                      "(%lds %ldns double buffering)",
+                      (long)render_time.tv_sec,
+                      render_time.tv_nsec,
+                      (long)double_buffering_time.tv_sec,
+                      double_buffering_time.tv_nsec);
++#endif
+             break;
+ 
+         case RENDER_TIMER_OSD:
