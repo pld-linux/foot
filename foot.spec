@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	pgo		# disable profile guided optimizations
+%bcond_with	pgo		# disable profile guided optimizations
 
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
