@@ -1,7 +1,11 @@
+#
+# Conditional build:
+%bcond_without	pgo		# disable profile guided optimizations
+
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
 Version:	1.11.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
@@ -24,6 +28,10 @@ BuildRequires:	tllist-devel >= 1.0.4
 BuildRequires:	wayland-devel
 BuildRequires:	wayland-protocols >= 1.21
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 1.0.0
+%if %{with pgo}
+BuildRequires:	cage
+BuildRequires:	fonts-TTF-DejaVu
+%endif
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	fcft < 4.0.0
@@ -76,9 +84,21 @@ ZSH completion for foot command line.
 
 %build
 %meson build \
+	%{?with_pgo:-Db_pgo=generate} \
 	-Dterminfo=disabled
 
 %ninja_build -C build
+
+%if %{with pgo}
+%ninja_test -C build
+
+./pgo/full-headless-cage.sh . build
+
+%__meson configure build \
+	-Db_pgo=use
+
+%ninja_build -C build
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
