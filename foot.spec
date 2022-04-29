@@ -4,19 +4,19 @@
 
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
-Version:	1.11.0
-Release:	3
+Version:	1.12.1
+Release:	1
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
-# Source0-md5:	206a9daad2e2c86c34ba1be497ff2de6
+# Source0-md5:	cb1e95f2027d71cc6293ad31558ff272
 Patch0:		x32.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
-BuildRequires:	fcft-devel >= 3.0.0
+BuildRequires:	fcft-devel >= 3.0.1
 BuildRequires:	fontconfig-devel
 BuildRequires:	libutf8proc-devel
-BuildRequires:	meson >= 0.54.0
+BuildRequires:	meson >= 0.58.0
 BuildRequires:	ninja
 BuildRequires:	pixman-devel
 BuildRequires:	pkgconfig
@@ -24,6 +24,7 @@ BuildRequires:	python3
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	scdoc
+BuildRequires:	systemd-devel
 BuildRequires:	tllist-devel >= 1.0.4
 BuildRequires:	wayland-devel
 BuildRequires:	wayland-protocols >= 1.21
@@ -35,7 +36,7 @@ BuildRequires:	fonts-TTF-DejaVu
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	fcft < 4.0.0
-Requires:	fcft >= 3.0.0
+Requires:	fcft >= 3.0.1
 Requires:	hicolor-icon-theme
 Requires:	terminfo >= 6.2.20210731
 Requires:	xorg-lib-libxkbcommon >= 1.0.0
@@ -119,8 +120,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.md README.md
+%dir %{_sysconfdir}/xdg/foot
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/foot/foot.ini
 %attr(755,root,root) %{_bindir}/foot
 %attr(755,root,root) %{_bindir}/footclient
+%{systemduserunitdir}/foot-server@.service
+%{systemduserunitdir}/foot-server@.socket
 %{_datadir}/foot
 %{_desktopdir}/foot.desktop
 %{_desktopdir}/foot-server.desktop
