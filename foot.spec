@@ -50,7 +50,7 @@ A fast, lightweight and minimalistic Wayland terminal emulator.
 Summary:	Bash completion for foot command line
 Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
-Requires:	bash-completion >= 2.0
+Requires:	bash-completion >= 1:2.0
 BuildArch:	noarch
 
 %description -n bash-completion-foot
