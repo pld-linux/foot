@@ -5,7 +5,7 @@
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
 Version:	1.13.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
