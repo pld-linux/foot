@@ -4,12 +4,12 @@
 
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
-Version:	1.13.1
+Version:	1.14.0
 Release:	1
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
-# Source0-md5:	af8dcc45e4a2c68282d46fce1910d313
+# Source0-md5:	fc90a7a6bc89509d122e3667fcc68255
 Patch0:		x32.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
@@ -86,6 +86,7 @@ ZSH completion for foot command line.
 %build
 %meson build \
 	%{?with_pgo:-Db_pgo=generate} \
+	-Ddefault-utempter-path=/usr/sbin/utempter \
 	-Dterminfo=disabled
 
 %ninja_build -C build
@@ -127,9 +128,9 @@ rm -rf $RPM_BUILD_ROOT
 %{systemduserunitdir}/foot-server@.service
 %{systemduserunitdir}/foot-server@.socket
 %{_datadir}/foot
-%{_desktopdir}/foot.desktop
-%{_desktopdir}/foot-server.desktop
-%{_desktopdir}/footclient.desktop
+%{_desktopdir}/org.codeberg.dnkl.foot.desktop
+%{_desktopdir}/org.codeberg.dnkl.foot-server.desktop
+%{_desktopdir}/org.codeberg.dnkl.footclient.desktop
 %{_iconsdir}/hicolor/*/apps/foot.png
 %{_iconsdir}/hicolor/scalable/apps/foot.svg
 %{_mandir}/man1/foot.1*
