@@ -4,19 +4,19 @@
 
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
-Version:	1.14.0
+Version:	1.15.0
 Release:	1
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
-# Source0-md5:	fc90a7a6bc89509d122e3667fcc68255
+# Source0-md5:	7c73f8008529c42c353f2b1e1b38ffff
 Patch0:		x32.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
 BuildRequires:	fcft-devel >= 3.0.1
 BuildRequires:	fontconfig-devel
 BuildRequires:	libutf8proc-devel
-BuildRequires:	meson >= 0.58.0
+BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja
 BuildRequires:	pixman-devel
 BuildRequires:	pkgconfig
@@ -25,9 +25,9 @@ BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	scdoc
 BuildRequires:	systemd-devel
-BuildRequires:	tllist-devel >= 1.0.4
+BuildRequires:	tllist-devel >= 1.1.0
 BuildRequires:	wayland-devel
-BuildRequires:	wayland-protocols >= 1.21
+BuildRequires:	wayland-protocols >= 1.32
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 1.0.0
 %if %{with pgo}
 BuildRequires:	cage
@@ -86,7 +86,8 @@ ZSH completion for foot command line.
 %build
 %meson build \
 	%{?with_pgo:-Db_pgo=generate} \
-	-Ddefault-utempter-path=/usr/sbin/utempter \
+	-Dutmp-backend=libutempter \
+	-Dutmp-default-helper-path=/usr/sbin/utempter \
 	-Dterminfo=disabled
 
 %ninja_build -C build
