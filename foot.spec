@@ -4,14 +4,13 @@
 
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
-Version:	1.15.0
-Release:	2
+Version:	1.15.1
+Release:	1
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
-# Source0-md5:	7c73f8008529c42c353f2b1e1b38ffff
+# Source0-md5:	a0fc6e3e0fb1f3b10edb2887779aeae7
 Patch0:		x32.patch
-Patch1:		no-cursor-shape.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
 BuildRequires:	fcft-devel >= 3.0.1
@@ -23,7 +22,7 @@ BuildRequires:	pixman-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python3
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.011
 BuildRequires:	scdoc
 BuildRequires:	systemd-devel
 BuildRequires:	tllist-devel >= 1.1.0
@@ -36,6 +35,7 @@ BuildRequires:	fonts-TTF-DejaVu
 %endif
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
+Requires(post,preun):	systemd-units >= 1:250.1
 Requires:	fcft < 4.0.0
 Requires:	fcft >= 3.0.1
 Requires:	hicolor-icon-theme
@@ -83,7 +83,6 @@ ZSH completion for foot command line.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
-%patch1 -p1
 
 %build
 %meson build \
@@ -116,6 +115,10 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %update_desktop_database_post
 %update_icon_cache hicolor
+%systemd_user_post foot-server.service foot-server.socket
+
+%preun
+%systemd_user_preun foot-server.service foot-server.socket
 
 %postun
 %update_desktop_database_postun
@@ -128,8 +131,8 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xdg/foot/foot.ini
 %attr(755,root,root) %{_bindir}/foot
 %attr(755,root,root) %{_bindir}/footclient
-%{systemduserunitdir}/foot-server@.service
-%{systemduserunitdir}/foot-server@.socket
+%{systemduserunitdir}/foot-server.service
+%{systemduserunitdir}/foot-server.socket
 %{_datadir}/foot
 %{_desktopdir}/org.codeberg.dnkl.foot.desktop
 %{_desktopdir}/org.codeberg.dnkl.foot-server.desktop
