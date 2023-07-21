@@ -1,0 +1,31 @@
+From 8ebde9f03411593f7652363a82d802ae4e5409c4 Mon Sep 17 00:00:00 2001
+From: xdavidwu <xdavidwuph@gmail.com>
+Date: Tue, 18 Jul 2023 21:09:24 +0800
+Subject: [PATCH] wayland: fix pointer cap lost handling
+
+Before this, on compositor without cursor-shape support, a pointer
+capability lost of the seat makes foot crash.
+---
+ wayland.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/wayland.c b/wayland.c
+index 9195797e..0e333573 100644
+--- a/wayland.c
++++ b/wayland.c
+@@ -341,8 +341,10 @@ seat_handle_capabilities(void *data, struct wl_seat *wl_seat,
+     } else {
+         if (seat->wl_pointer != NULL) {
+ #if defined(HAVE_CURSOR_SHAPE)
+-            wp_cursor_shape_device_v1_destroy(seat->pointer.shape_device);
+-            seat->pointer.shape_device = NULL;
++            if (seat->pointer.shape_device != NULL) {
++                wp_cursor_shape_device_v1_destroy(seat->pointer.shape_device);
++                seat->pointer.shape_device = NULL;
++            }
+ #endif
+ 
+             wl_pointer_release(seat->wl_pointer);
+-- 
+2.30.8
+
