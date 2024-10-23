@@ -4,12 +4,12 @@
 
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
-Version:	1.18.1
+Version:	1.19.0
 Release:	1
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
-# Source0-md5:	2fdc53a6290ee1b341168d44174699ac
+# Source0-md5:	b5620f6b5c83df6d46fb9708cbb002ef
 Patch0:		x32.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
@@ -27,7 +27,7 @@ BuildRequires:	scdoc
 BuildRequires:	systemd-devel
 BuildRequires:	tllist-devel >= 1.1.0
 BuildRequires:	wayland-devel
-BuildRequires:	wayland-protocols >= 1.32
+BuildRequires:	wayland-protocols >= 1.37
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 1.0.0
 %if %{with pgo}
 BuildRequires:	cage
@@ -134,9 +134,9 @@ rm -rf $RPM_BUILD_ROOT
 %{systemduserunitdir}/foot-server.service
 %{systemduserunitdir}/foot-server.socket
 %{_datadir}/foot
-%{_desktopdir}/org.codeberg.dnkl.foot.desktop
-%{_desktopdir}/org.codeberg.dnkl.foot-server.desktop
-%{_desktopdir}/org.codeberg.dnkl.footclient.desktop
+%{_desktopdir}/foot.desktop
+%{_desktopdir}/foot-server.desktop
+%{_desktopdir}/footclient.desktop
 %{_iconsdir}/hicolor/*/apps/foot.png
 %{_iconsdir}/hicolor/scalable/apps/foot.svg
 %{_mandir}/man1/foot.1*
