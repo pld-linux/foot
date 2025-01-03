@@ -8,8 +8,8 @@ Version:	1.20.1
 Release:	1
 License:	MIT
 Group:		Applications/Terminal
-Source0:	https://codeberg.org/dnkl/foot/archive/%{version}.tar.gz
-# Source0-md5:	8c5b9f5037e9d2d09050597d23d5978c
+Source0:	https://codeberg.org/dnkl/foot/releases/download/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	afcd83494e5e62279c8635a46aec8dd5
 Patch0:		x32.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
@@ -81,7 +81,7 @@ BuildArch:	noarch
 ZSH completion for foot command line.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 %patch0 -p1
 
 %build
