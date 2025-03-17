@@ -4,16 +4,16 @@
 
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
-Version:	1.20.2
+Version:	1.21.0
 Release:	1
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2cedd1bdf4e09f6288811395996cf822
+# Source0-md5:	4cfb91c9d3ff66cb9852b49e85c892d8
 Patch0:		x32.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
-BuildRequires:	fcft-devel >= 3.0.1
+BuildRequires:	fcft-devel >= 3.3.1
 BuildRequires:	fontconfig-devel
 BuildRequires:	libutf8proc-devel
 BuildRequires:	meson >= 0.59.0
@@ -27,7 +27,7 @@ BuildRequires:	scdoc
 BuildRequires:	systemd-devel
 BuildRequires:	tllist-devel >= 1.1.0
 BuildRequires:	wayland-devel
-BuildRequires:	wayland-protocols >= 1.37
+BuildRequires:	wayland-protocols >= 1.41
 BuildRequires:	xorg-lib-libxkbcommon-devel >= 1.0.0
 %if %{with pgo}
 BuildRequires:	cage
@@ -37,7 +37,7 @@ Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,preun):	systemd-units >= 1:250.1
 Requires:	fcft < 4.0.0
-Requires:	fcft >= 3.0.1
+Requires:	fcft >= 3.3.1
 Requires:	hicolor-icon-theme
 Requires:	terminfo >= 6.2.20210731
 Requires:	xorg-lib-libxkbcommon >= 1.0.0
