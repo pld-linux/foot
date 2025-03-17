@@ -22,7 +22,7 @@ BuildRequires:	pixman-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python3
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.011
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	scdoc
 BuildRequires:	systemd-devel
 BuildRequires:	tllist-devel >= 1.1.0
@@ -85,29 +85,29 @@ ZSH completion for foot command line.
 %patch -P0 -p1
 
 %build
-%meson build \
+%meson \
 	%{?with_pgo:-Db_pgo=generate} \
 	-Dutmp-backend=libutempter \
 	-Dutmp-default-helper-path=/usr/sbin/utempter \
 	-Dterminfo=disabled
 
-%ninja_build -C build
+%meson_build
 
 %if %{with pgo}
-%ninja_test -C build
+%meson_test
 
 ./pgo/full-headless-cage.sh . build
 
 %__meson configure build \
 	-Db_pgo=use
 
-%ninja_build -C build
+%meson_build
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
