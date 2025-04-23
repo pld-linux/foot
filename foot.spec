@@ -5,12 +5,13 @@
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
 Version:	1.22.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/releases/download/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	ffe00f17300f19bac5eb6d0f933ed3a7
 Patch0:		x32.patch
+Patch1:		header-gen-race.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
 BuildRequires:	fcft-devel >= 3.3.1
@@ -83,6 +84,7 @@ ZSH completion for foot command line.
 %prep
 %setup -q
 %patch -P0 -p1
+%patch -P1 -p1
 
 %build
 %meson \

@@ -1,0 +1,37 @@
+From bc8d6d1ff350672cae7d7e6572eab2d10b1b415e Mon Sep 17 00:00:00 2001
+From: Jan Palus <jpalus@fastmail.com>
+Date: Wed, 23 Apr 2025 11:44:41 +0200
+Subject: [PATCH] build: fix race when generating emoji-variation-sequences.h
+
+d3f692990ef6 moved emoji-variation-sequences.h header inclusion from
+vt.c to terminal.c. these two files are part of different libraries
+hence target for generating emoji-variation-sequences.h needs to be
+moved too.
+---
+ meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/meson.build b/meson.build
+index ed2dc7e4..3d97040d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -253,7 +253,7 @@ vtlib = static_library(
+   'osc.c', 'osc.h',
+   'sixel.c', 'sixel.h',
+   'vt.c', 'vt.h',
+-  builtin_terminfo, emoji_variation_sequences, srgb_funcs,
++  builtin_terminfo, srgb_funcs,
+   wl_proto_src + wl_proto_headers,
+   version,
+   dependencies: [libepoll, pixman, fcft, tllist, wayland_client, xkb, utf8proc],
+@@ -265,6 +265,7 @@ pgolib = static_library(
+   'grid.c', 'grid.h',
+   'selection.c', 'selection.h',
+   'terminal.c', 'terminal.h',
++  emoji_variation_sequences,
+   wl_proto_src + wl_proto_headers,
+   dependencies: [libepoll, pixman, fcft, tllist, wayland_client, xkb, utf8proc],
+   link_with: vtlib,
+-- 
+2.49.0
+
