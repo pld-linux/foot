@@ -4,12 +4,12 @@
 
 Summary:	A fast, lightweight and minimalistic Wayland terminal emulator
 Name:		foot
-Version:	1.22.3
-Release:	2
+Version:	1.23.0
+Release:	1
 License:	MIT
 Group:		Applications/Terminal
 Source0:	https://codeberg.org/dnkl/foot/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e689d751400af9a8573845eaebf86c78
+# Source0-md5:	11687666c70d1c66d3c208b195862a55
 Patch0:		x32.patch
 URL:		https://codeberg.org/dnkl/foot/
 BuildRequires:	fcft-devel < 4.0.0
@@ -18,7 +18,7 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	libutf8proc-devel
 BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja
-BuildRequires:	pixman-devel
+BuildRequires:	pixman-devel >= 0.46.0
 BuildRequires:	pkgconfig
 BuildRequires:	python3
 BuildRequires:	rpm-build >= 4.6
@@ -28,7 +28,7 @@ BuildRequires:	systemd-devel
 BuildRequires:	tllist-devel >= 1.1.0
 BuildRequires:	wayland-devel
 BuildRequires:	wayland-protocols >= 1.41
-BuildRequires:	xorg-lib-libxkbcommon-devel >= 1.8.0
+BuildRequires:	xorg-lib-libxkbcommon-devel >= 1.0.0
 %if %{with pgo}
 BuildRequires:	cage
 BuildRequires:	fonts-TTF-DejaVu
@@ -39,8 +39,9 @@ Requires(post,preun):	systemd-units >= 1:250.1
 Requires:	fcft < 4.0.0
 Requires:	fcft >= 3.3.1
 Requires:	hicolor-icon-theme
+Requires:	pixman >= 0.46.0
 Requires:	terminfo >= 6.2.20210731
-Requires:	xorg-lib-libxkbcommon >= 1.8.0
+Requires:	xorg-lib-libxkbcommon >= 1.0.0
 Obsoletes:	terminfo-foot < 1.10.3-2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
