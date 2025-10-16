@@ -1,27 +1,31 @@
---- foot/render.c.orig	2023-04-04 10:57:06.134176306 +0200
-+++ foot/render.c	2023-04-04 11:01:00.376577525 +0200
-@@ -2954,6 +2954,17 @@
+--- foot-1.25.0/render.c.orig	2025-10-16 08:46:58.000000000 +0200
++++ foot-1.25.0/render.c	2025-10-16 15:12:26.865974366 +0200
+@@ -3632,6 +3632,21 @@
          switch (term->conf->tweak.render_timer) {
          case RENDER_TIMER_LOG:
          case RENDER_TIMER_BOTH:
 +#if defined(__x86_64__) && defined(__ILP32__)
 +            LOG_INFO(
 +                "frame rendered in %lds %9lldns "
-+                "(%lds %9lldns rendering, %lds %9lldns double buffering)",
++                "(%lds %9lldns wait, %lds %9lldns rendering, %lds %9lldns double buffering) not included: %lds %lldns pre-apply damage",
 +                (long)total_render_time.tv_sec,
 +                total_render_time.tv_nsec,
++                (long)wait_time.tv_sec,
++                wait_time.tv_nsec,
 +                (long)render_time.tv_sec,
 +                render_time.tv_nsec,
 +                (long)double_buffering_time.tv_sec,
-+                double_buffering_time.tv_nsec);
++                double_buffering_time.tv_nsec,
++                (long)preapply_damage.tv_sec,
++                preapply_damage.tv_nsec);
 +#else
              LOG_INFO(
                  "frame rendered in %lds %9ldns "
-                 "(%lds %9ldns rendering, %lds %9ldns double buffering)",
-@@ -2963,6 +2974,7 @@
-                 render_time.tv_nsec,
-                 (long)double_buffering_time.tv_sec,
-                 double_buffering_time.tv_nsec);
+                 "(%lds %9ldns wait, %lds %9ldns rendering, %lds %9ldns double buffering) not included: %lds %ldns pre-apply damage",
+@@ -3645,6 +3660,7 @@
+                 double_buffering_time.tv_nsec,
+                 (long)preapply_damage.tv_sec,
+                 preapply_damage.tv_nsec);
 +#endif
              break;
  
